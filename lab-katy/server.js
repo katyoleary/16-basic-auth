@@ -9,6 +9,7 @@ const morgan = require('morgan');
 
 
 const authRouter = require('./route/auth-router.js');
+const collectionRouter = require('./route/collection-router.js');
 const errors = require('./lib/error-middleware.js');
 
 dotenv.load();
@@ -20,6 +21,7 @@ mongoose.connect(process.env.MONGODB_URI); //using because thats what herokus go
 app.use(cors());
 app.use(morgan('dev'));
 app.use(authRouter);
+app.use(collectionRouter);
 app.use(errors);
 
 const server = module.exports = app.listen(PORT, () => {
