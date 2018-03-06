@@ -1,7 +1,6 @@
 {
   "name": "cf-gram",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "directories": {
     "lib": "lib"
@@ -9,6 +8,9 @@
   "scripts": {
     "test": "DEBUG='cfgram*' jest",
     "start": "DEBUG='cfgram*' node server.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
@@ -23,11 +25,13 @@
     "express": "^4.16.2",
     "http-errors": "^1.6.2",
     "jsonwebtoken": "^8.2.0",
-    "mongoose": "^5.0.8",
+    "mongoose": "^5.0.9",
     "morgan": "^1.9.0"
   },
   "devDependencies": {
+    "eslint": "^4.18.2",
     "jest": "^22.4.2",
     "superagent": "^3.8.2"
-  }
+  },
+  "description": ""
 }

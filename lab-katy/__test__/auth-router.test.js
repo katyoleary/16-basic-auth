@@ -18,15 +18,18 @@ const exampleUser = {
   email: 'exampleuser@test.com'
 }
 
-describe('Auth Routes', function() {
+describe('Authorization Routes', function() {
 
-  beforeAll( done => {
+  beforeEach( done => {
     serverToggle.serverOn(server, done);
   });
 
-  afterAll( done => {
+  afterEach( done => {
     serverToggle.serverOff(server, done);
   });
+
+
+  //POST ROUTE TESTS
 
   describe('POST: /api/signup', function() {
     describe('with a valid body', function() {
@@ -48,7 +51,21 @@ describe('Auth Routes', function() {
         });
       });
     });
+
+    describe('with invalid or no body', function() {
+      it('should return a 400 status', done => {
+        request.post(`${url}/api/signup`)
+        .send({})
+        .end((err, res) => {
+          expect(res.status).toEqual(400);
+          done();
+        })
+      })
+    })
   });
+
+
+  //GET ROUTE TESTS
 
   describe('GET: /api/signin', function() {
     describe('with a valid body', function() {
@@ -81,6 +98,16 @@ describe('Auth Routes', function() {
           done();
         });
       });
+    });
+    
+    describe('with an invalid un/password', function() {
+      it('should return a 401 status', done => {
+        request.get(`${url}/api/signin`)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          done();
+      });
+     });
     });
   });
 });

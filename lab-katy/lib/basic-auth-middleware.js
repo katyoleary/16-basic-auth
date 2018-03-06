@@ -30,9 +30,7 @@ module.exports = function(req, res, next) {
   req.auth = {
     username: authArr[0], 
     password: authArr[1],
-  }
-
-  console.log('REQ.AUTH.USERNAME', req.auth.username);
+  };
 
   //make sure username and password are applied
   if (!req.auth.username) {
@@ -44,4 +42,4 @@ module.exports = function(req, res, next) {
   }
 
   next();
-}
+};
