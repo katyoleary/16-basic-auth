@@ -6,16 +6,16 @@ const mongoose = require('mongoose');
 module.exports = exports = {};
 
 exports.serverOn = function(server, done) {
-   if (!server.isRunning) {
-     server.listen(process.env.PORT, () => {
-       server.isRunning = true;
-       debug('server up!');
-       done();
-     });
-     return;
-    }
-    done();
+  if (!server.isRunning) {
+    server.listen(process.env.PORT, () => {
+      server.isRunning = true;
+      debug('server up!');
+      done();
+    });
+    return;
   }
+  done();
+};
 
 exports.serverOff = function(server, done) {
   if(!server.isRunning) {
@@ -29,4 +29,4 @@ exports.serverOff = function(server, done) {
     return;
   }
   done();
-}
+};
