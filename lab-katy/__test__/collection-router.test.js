@@ -149,6 +149,14 @@ describe('Collection Routes', function() {
           done();
         });
     });
+
+    it('should return a 401 if no token provided', done => {
+      request.get(`${url}/api/collection/${this.tempCollection._id}`)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          done();
+        });
+    });
   });
 
   //PUT ROUTE TESTS
