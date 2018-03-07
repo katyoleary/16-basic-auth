@@ -18,7 +18,7 @@ exports.serverOn = function(server, done) {
 };
 
 exports.serverOff = function(server, done) {
-  if(!server.isRunning) {
+  if(server.isRunning) {
     server.close( err => {
       if (err) done(err);
       server.isRunning = false;

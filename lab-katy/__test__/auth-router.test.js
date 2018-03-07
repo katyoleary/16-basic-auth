@@ -8,7 +8,8 @@ const server = require('../server.js');
 
 require('jest');
 
-const url = 'http://localhost:3000';
+const PORT = process.env.PORT || 3001;
+const url = `http://localhost:${PORT}`;
 
 const exampleUser = {
   username: 'exampleuser', 
@@ -18,11 +19,11 @@ const exampleUser = {
 
 describe('Authorization Routes', function() {
 
-  beforeEach( done => {
+  beforeAll( done => {
     serverToggle.serverOn(server, done);
   });
 
-  afterEach( done => {
+  afterAll( done => {
     serverToggle.serverOff(server, done);
   });
 

@@ -1,7 +1,6 @@
 'use strict';
 
 const request = require('superagent');
-// const mongoose = require('mongoose');
 const server = require('../server.js');
 const serverToggle = require('../lib/server-toggle.js');
 
@@ -24,6 +23,11 @@ const exampleCollection = {
   desc: 'test collection description',
 };
 
+const updateCollection = {
+  name: 'update collection', 
+  desc: 'update collection description',
+};
+
 describe('Collection Routes', function() {
   
   beforeAll( done => {
@@ -42,6 +46,10 @@ describe('Collection Routes', function() {
       .then( () => done())
       .catch(done);
   });
+
+
+  //POST ROUTE TESTS
+
 
   describe('POST: /api/collection', () => {
     beforeEach( done => {
@@ -75,6 +83,8 @@ describe('Collection Routes', function() {
         }); 
     });
   });
+
+  //GET ROUTE TESTS
 
   describe('GET: /api/collection/:collectionId', () => {
     beforeEach( done => {
@@ -116,6 +126,71 @@ describe('Collection Routes', function() {
           expect(res.body.name).toEqual(exampleCollection.name);
           expect(res.body.desc).toEqual(exampleCollection.desc);
           expect(res.body.userID).toEqual(this.tempUser._id.toString());
+          done();
+        });
+    });
+  });
+
+  //PUT ROUTE TESTS
+
+  describe('PUT: /api/collection/:collectionId', () => {
+    beforeEach( done => {
+      new User(exampleUser)
+        .generatePasswordHash(exampleUser.password)
+        .then( user => {
+          this.tempUser = user;
+          return user.generateToken();
+        })
+        .then( token => {
+          this.tempToken = token;
+          done();
+        })
+        .catch(done);
+    });
+
+    beforeEach( done => {
+      exampleCollection.userID = this.tempUser._id.toString();
+      new Collection(exampleCollection).save()
+        .then( collection => {
+          this.tempCollection = collection;
+          done();
+        })
+        .catch(done);
+    });
+
+    afterEach( () => {
+      delete exampleCollection.userID;
+    });
+
+    it('should return a collection', done => {
+      request.put(`${url}/api/collection/${this.tempCollection._id}`)
+        .send(updateCollection)
+        .set({
+          Authorization: `Bearer ${this.tempToken}`,
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).toEqual(200);
+          expect(res.body.desc).toEqual(updateCollection.desc);
+          expect(res.body.name).toEqual(updateCollection.name);
+          expect(res.body.userID).toEqual(this.tempUser._id.toString());
+          done();
+        });
+    });
+
+    it('should return a 401 with no token', done => {
+      request.put(`${url}/api/collection/${this.tempCollection._id}`)
+        .send(updateCollection)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          done();
+        });
+    });
+
+    it('should return a 404 invalid id', done => {
+      request.put(`${url}/api/collection/`)
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
           done();
         });
     });
