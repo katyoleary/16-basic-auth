@@ -194,5 +194,16 @@ describe('Collection Routes', function() {
           done();
         });
     });
+
+    it('should return a 400 error without a body', done => {
+      request.put(`${url}/api/collection/${this.tempCollection._id}`)
+        .set({
+          Authorization: `Bearer ${this.tempToken}`,
+        })
+        .end((err, res) => {
+          expect(res.status).toEqual(400);
+          done();
+        });
+    });
   });
 });

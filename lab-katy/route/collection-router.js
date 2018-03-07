@@ -41,6 +41,9 @@ collectionRouter.put('/api/collection/:collectionId', bearerAuth, jsonParser, fu
     res.status(404).send();
   }
 
+  if(!req.body.name) return next(createError(400, 'no name provided'));
+  if(!req.body.desc) return next(createError(400, 'no description provided'));
+
   Collection.findByIdAndUpdate(req.params.collectionId, req.body, { new: true })
     .then( collection => res.json(collection))
     .catch( err => {
