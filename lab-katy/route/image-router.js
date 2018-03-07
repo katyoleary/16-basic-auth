@@ -57,7 +57,6 @@ imageRouter.post('/api/collection/:collectionId/image', bearerAuth, upload.singl
   Collection.findById(req.params.collectionId) //find collection
     .then( () => s3uploadProm(params)) //then call s3Prom, pass it params so it knows what to upload and what bucket to upoload to
     .then( s3data => { //the obj we get back from s3 has tons of props
-      console.log('s3 response:', s3data);
       del([`${dataDir}/*`]);
 
       //going to be some of the things s3 gave us back
@@ -69,8 +68,6 @@ imageRouter.post('/api/collection/:collectionId/image', bearerAuth, upload.singl
         userID: req.user._id,
         collectionID: req.params.collectionId,
       };
-
-      console.log(imageData);
 
       return new Image(imageData).save();
     })

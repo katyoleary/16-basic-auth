@@ -16,7 +16,7 @@ const errors = require('./lib/error-middleware.js');
 dotenv.load();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 mongoose.connect(process.env.MONGODB_URI); //using because thats what herokus gonna do. dont have to change this line when we push up
 
 app.use(cors());
