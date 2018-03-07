@@ -82,6 +82,15 @@ describe('Collection Routes', function() {
           done();
         }); 
     });
+
+    it('should return a 401 if no token provided', done => {
+      request.post(`${url}/api/collection`)
+        .send(exampleCollection)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          done();
+        });
+    });
   });
 
   //GET ROUTE TESTS
