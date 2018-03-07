@@ -10,6 +10,7 @@ const morgan = require('morgan');
 
 const authRouter = require('./route/auth-router.js');
 const collectionRouter = require('./route/collection-router.js');
+const imageRouter = require('./route/image-router.js');
 const errors = require('./lib/error-middleware.js');
 
 dotenv.load();
@@ -22,6 +23,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(authRouter);
 app.use(collectionRouter);
+app.use(imageRouter);
 app.use(errors);
 
 const server = module.exports = app.listen(PORT, () => {
