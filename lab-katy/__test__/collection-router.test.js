@@ -157,6 +157,14 @@ describe('Collection Routes', function() {
           done();
         });
     });
+
+    it('should return a 404 if id not found', done => {
+      request.get(`${url}/api/collection/`)
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          done();
+        });
+    });
   });
 
   //PUT ROUTE TESTS
