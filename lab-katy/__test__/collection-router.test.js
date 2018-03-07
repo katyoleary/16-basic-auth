@@ -91,6 +91,17 @@ describe('Collection Routes', function() {
           done();
         });
     });
+
+    it('should return a 400 error if no body provided', done => {
+      request.post(`${url}/api/collection`)
+        .set({
+          Authorization: `Bearer ${this.tempToken}`,
+        })
+        .end((err, res) => {
+          expect(res.status).toEqual(400);
+          done();
+        });
+    });
   });
 
   //GET ROUTE TESTS
